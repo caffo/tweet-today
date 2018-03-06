@@ -42,7 +42,7 @@ task :tweet do
 
     email   = Mail.new(from, subject, to, content)
     client  = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
-    client.client.mail._('send').post(request_body: mail.to_json)
+    client.client.mail._('send').post(request_body: email.to_json)
   else
     puts html
   end
