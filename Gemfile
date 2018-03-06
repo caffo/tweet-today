@@ -4,7 +4,7 @@ ruby "2.4.0"
 
 gem "chronic"
 gem "erubis"
-gem "postmark"
+gem "sendgrid-ruby"
 gem "rake"
 gem "tilt"
 gem "twitter"
