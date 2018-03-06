@@ -1,7 +1,7 @@
 {
   "name": "Tweet Today",
   "description": "A simple app for emailing today's tweets",
-  "repository": "https://github.com/icco/tweet-today",
+  "repository": "https://github.com/caffo/tweet-today",
   "addons": ["scheduler:standard", "sendgrid:starter"],
   "keywords": ["ruby", "twitter", "cron"]
 }
