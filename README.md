@@ -8,7 +8,8 @@ Send an email of a twitter list's tweets every day.
 
 This isn't quite a one click deploy. After you deploy to heroku (by clicking the button above), you will need to configure the following environment variables in Heroku by either using the `heroku config:add` command or the web ui.
 
- - `EMAIL_FROM_ADDRESS='Tweet Today <from@example.com>'` This will need to be configured in the postmark ui. You can see that by either clicking the link in the web ui or running `heroku addons:open postmark`. You can either configure a whole domain or just a single address.
+ - `SENDGRID_API_KEY=blob` You get this from sendgrid https://elements.heroku.com/addons/sendgrid 
+ - `EMAIL_FROM_ADDRESS='Tweet Today <from@example.com>'` Use any valid email you want.
  - `EMAIL_TO_ADDRESS='Your Name <you@example.com>'` This is where you want the email to go.
  - `TWITTER_KEY=blob` You get this from twitter at https://apps.twitter.com/app/new
  - `TWITTER_SECRET=blob` You get this from twitter at https://apps.twitter.com/app/new
