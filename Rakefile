@@ -5,6 +5,9 @@ require "bundler"
 
 Bundler.require
 
+require "sendgrid-ruby"
+include SendGrid
+
 task default: :tweet
 
 desc "Gets tweets"
@@ -28,18 +31,18 @@ task :tweet do
   html = template.render(nil, messages: messages,
                               oembeds: client.oembeds(messages, omit_script: true))
 
-  if ENV["POSTMARK_API_TOKEN"]
+  if ENV["SENDGRID_API_KEY"]
     raise "$EMAIL_TO_ADDRESS not set in ENV, cannot email." if ENV["EMAIL_TO_ADDRESS"].nil?
     raise "$EMAIL_FROM_ADDRESS not set in ENV, cannot email." if ENV["EMAIL_FROM_ADDRESS"].nil?
+   
+    from    = Email.new(email: ENV["EMAIL_FROM_ADDRESS"])
+    to      = Email.new(email: ENV["EMAIL_TO_ADDRESS"])    
+    content = Content.new(type: 'text/html', value: html)
+    subject = "Tweet Today #{Time.now.strftime("%F")}",
 
-    client = Postmark::ApiClient.new(ENV["POSTMARK_API_TOKEN"])
-    client.deliver(
-      from: ENV["EMAIL_FROM_ADDRESS"],
-      to: ENV["EMAIL_TO_ADDRESS"],
-      subject: "Tweet Today #{Time.now.strftime("%F")}",
-      html_body: html,
-      track_links: :html_only
-    )
+    email   = Mail.new(from, subject, to, content)
+    client  = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+    client.client.mail._('send').post(request_body: mail.to_json)
   else
     puts html
   end
