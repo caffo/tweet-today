@@ -40,9 +40,11 @@ task :tweet do
     content = Content.new(type: 'text/html', value: html)
     subject = "Tweet Today #{Time.now.strftime("%F")}",
 
-    email   = Mail.new(from, subject, to, content)
-    client  = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
-    client.client.mail._('send').post(request_body: email.to_json)
+    email    = Mail.new(from, subject, to, content)
+    client   = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+    response = client.client.mail._('send').post(request_body: email.to_json)
+
+    p response
   else
     puts html
   end
