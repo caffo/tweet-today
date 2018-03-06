@@ -44,10 +44,8 @@ task :tweet do
     client   = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
     response = client.client.mail._('send').post(request_body: email.to_json)
 
+    p email.to_json
     p response
-    puts response.status_code
-    puts response.body
-    puts response.headers
   else
     puts html
   end
