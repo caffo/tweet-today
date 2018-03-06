@@ -34,9 +34,9 @@ task :tweet do
   if ENV["SENDGRID_API_KEY"]
     raise "$EMAIL_TO_ADDRESS not set in ENV, cannot email." if ENV["EMAIL_TO_ADDRESS"].nil?
     raise "$EMAIL_FROM_ADDRESS not set in ENV, cannot email." if ENV["EMAIL_FROM_ADDRESS"].nil?
-   
+
     from    = Email.new(email: ENV["EMAIL_FROM_ADDRESS"])
-    to      = Email.new(email: ENV["EMAIL_TO_ADDRESS"])    
+    to      = Email.new(email: ENV["EMAIL_TO_ADDRESS"])
     content = Content.new(type: 'text/html', value: html)
     subject = "Tweet Today #{Time.now.strftime("%F")}",
 
@@ -45,6 +45,9 @@ task :tweet do
     response = client.client.mail._('send').post(request_body: email.to_json)
 
     p response
+    puts response.status_code
+    puts response.body
+    puts response.headers
   else
     puts html
   end
